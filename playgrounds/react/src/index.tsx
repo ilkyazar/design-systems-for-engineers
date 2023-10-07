@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 
 import Button from '@ds.e/react'
 
+import '@ds.e/scss/lib/Button.css';
+
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 )
