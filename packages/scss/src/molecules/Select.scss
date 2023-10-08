@@ -1,0 +1,22 @@
+@import "foundation/all";
+
+.dse-select {
+    display: flex;
+    flex-direction: column;
+
+    position: relative; // position options menu relative to the select button
+
+    &__label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: map-get($spacing, 'xs');
+        border: 1px solid $white-dark;
+        background: $white;
+
+        font-family: $body-font-family;
+
+        cursor: pointer;
+    }
+}
