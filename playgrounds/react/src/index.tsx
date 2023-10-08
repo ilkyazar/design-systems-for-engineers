@@ -32,8 +32,16 @@ root.render(
                 <Text size='xs'>This is some text.</Text>
             </Margin>
             <Button label="React Playground"/>
+
             <Margin top bottom space='lg'>
                 <Select options={options}/>
+            </Margin>
+
+            <Margin top bottom space='lg'>
+                <Select options={options} renderOption={({ option, getOptionRecommendedProps }) => <p {...getOptionRecommendedProps({
+                    // className: 'custom'
+                    // User can pass in some overrides like classname etc.
+                })}>{option.label}</p>}/>
             </Margin>
         </div>
     </React.StrictMode>,
