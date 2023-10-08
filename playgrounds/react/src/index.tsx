@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 // import Button from '@ds.e/react';
-import { Color } from '@ds.e/react';
+import Color from '@ds.e/react';
 // import '@ds.e/scss/lib/Button.css';
 import '@ds.e/scss/lib/Utilities.css';
 
