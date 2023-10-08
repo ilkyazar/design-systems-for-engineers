@@ -12,6 +12,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "dev": "yarn build --watch"
   }
 }
