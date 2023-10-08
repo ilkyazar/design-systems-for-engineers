@@ -26,7 +26,7 @@ const options = [{
 
 root.render(
     <React.StrictMode>
-        <div>
+        <div style={{ padding: '40px' }}>
             <Color hexCode='#000' width="lg" height="lg"/>
             <Margin top bottom space='md'>
                 <Text size='xs'>This is some text.</Text>

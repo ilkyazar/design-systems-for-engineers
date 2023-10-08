@@ -46,7 +46,9 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
         {isOpen ? (
             <ul style={{ top: overlayTop }} className="dse-select__overlay">
             {options.map((option, optionIndex) => {
-                return <li key={option.value} onClick={() => onOptionSelected(option, optionIndex)}>{option.label}</li>
+                return <li key={option.value} className="dse-select__option" 
+                            onClick={() => onOptionSelected(option, optionIndex)}>{option.label}
+                        </li>
             })}
         </ul>
         ) : null}
