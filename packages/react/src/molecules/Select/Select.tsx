@@ -6,7 +6,8 @@ export const KEY_CODES = {
     SPACE: ' ',
     DOWN_ARROW: 'ArrowDown',
     ESC: 'Escape',
-    UP_ARROW: 'ArrowUp'
+    UP_ARROW: 'ArrowUp',
+    TAB: 'Tab',
 }
 
 interface SelectOption {
@@ -26,6 +27,30 @@ interface SelectProps {
     label?: string,
     renderOption?: (props: RenderOptionProps) => React.ReactNode
  }
+
+ const getPreviousOptionIndex = (currentIndex: number | null, options: Array<SelectOption>) => {
+    if (currentIndex === null) {
+        return 0;
+    }
+
+    if (currentIndex === 0) {
+        return options.length - 1;
+    }
+
+    return currentIndex - 1;
+}
+
+const getNextOptionIndex = (currentIndex: number | null, options: Array<SelectOption>) => {
+    if (currentIndex === null) {
+        return 0;
+    }
+
+    if (currentIndex === options.length - 1) {
+        return 0;
+    }
+
+    return currentIndex + 1;
+}
 
 const Select: React.FC<SelectProps> = ({ options = [], label='Please select an option', onOptionSelected: handler, renderOption }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -63,7 +88,7 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
         selectedOption = options[selectedIndex];
     }
 
-    const highlightItem = (optionIndex: number | null) => {
+    const highlightOption = (optionIndex: number | null) => {
         setHighlightedIndex(optionIndex);
 
         // This does not work here.
@@ -89,7 +114,7 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
             setIsOpen(true)
 
             // Set focus on the list item.
-            highlightItem(0);
+            highlightOption(0);
         }
     }
 
@@ -108,7 +133,29 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
                 ref.current.focus();
             }
         }
-    }, [isOpen])
+    }, [isOpen, highlightedIndex])
+
+    const onOptionKeyDown: KeyboardEventHandler = (event) => {
+        if (event.key === KEY_CODES.ESC) {
+            setIsOpen(false);
+            return;
+        }
+
+        if (event.key === KEY_CODES.DOWN_ARROW) {
+            highlightOption(getNextOptionIndex(highlightedIndex, options));
+        }
+
+        if (event.key === KEY_CODES.UP_ARROW) {
+            highlightOption(
+                getPreviousOptionIndex(highlightedIndex, options)
+            );
+        }
+
+        if (event.key === KEY_CODES.ENTER) {
+            // There was a key press, so highlightedIndex is definitely set.
+            onOptionSelected(options[highlightedIndex!], highlightedIndex!);
+        }
+    }
 
     return <div className="dse-select">
         <button onKeyDown={onButtonKeyDown}
@@ -140,10 +187,14 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
                             ${isHighlighted ? 'dse-select__option--highlighted' : ''}`,
                         onClick: () => onOptionSelected(option, optionIndex),
                         key: option.value,
+                        role: 'menuitemradio',
+                        'aria-label': option.label,
                         ref,
-                        tabIndex: isHighlighted ? -1 : 0, // Give tabIndex so it is highlightable.
-                        onMouseEnter: () => highlightItem(optionIndex),
-                        onMouseLeave: () => highlightItem(null),
+                        tabIndex: isHighlighted ? -1 : 0, // Give tabIndex, so it is highlightable.
+                        onMouseEnter: () => highlightOption(optionIndex),
+                        onMouseLeave: () => highlightOption(null),
+                        onKeyDown: onOptionKeyDown,
+                        'aria-checked': isSelected ? true : undefined, // Assistive technology knows it's checked.
                         ...overrideProps
                     }}
                 };
