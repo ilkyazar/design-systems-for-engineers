@@ -3,7 +3,8 @@ module.exports = {
     stories: ['../src/**/*.stories.tsx'],
 
     addons: [
-        getAbsolutePath("@storybook/preset-typescript")
+        getAbsolutePath("@storybook/preset-typescript"),
+        getAbsolutePath("@storybook/addon-storysource")
     ],
 
     framework: {
