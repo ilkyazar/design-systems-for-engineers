@@ -169,9 +169,9 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
             </svg>
         </button>
 
-        {isOpen ? (
-            <ul id="dse-select-list" role="menu" 
-            style={{ top: overlayTop }} className="dse-select__overlay">
+        {(
+            <ul id="dse-select-list" role="menu" style={{ top: overlayTop }} 
+            className={`dse-select__overlay ${isOpen ? 'dse-select__overlay--open' : ''}`}>
             {options.map((option, optionIndex) => {
                 const isSelected = selectedIndex === optionIndex;
                 const isHighlighted = highlightedIndex === optionIndex;
@@ -215,7 +215,7 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
                         </li>
             })}
         </ul>
-        ) : null}
+        )}
         
     </div>;
 }

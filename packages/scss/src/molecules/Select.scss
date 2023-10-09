@@ -36,6 +36,8 @@
         @include padding('none');
         @include margin('none');
 
+        display: none;
+
         border: 1px solid $form-border-color;
         background-color: $form-bg-color;
         z-index: 99;
@@ -67,5 +69,11 @@
     &__option--selected {
         background-color: $form-bg-option-selected;
         color: $form-color-option-selected;
+    }
+}
+
+.dse-select__overlay {
+    &--open {
+        display: block;
     }
 }
