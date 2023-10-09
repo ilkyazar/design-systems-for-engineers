@@ -158,7 +158,7 @@ const Select: React.FC<SelectProps> = ({ options = [], label='Please select an o
     }
 
     return <div className="dse-select">
-        <button onKeyDown={onButtonKeyDown}
+        <button onKeyDown={onButtonKeyDown} data-testid='dse-select-button'
             aria-controls="dse-select-list" aria-haspopup={true} aria-expanded={isOpen ? true : undefined}
             ref={labelRef} className="dse-select__label" onClick={() => onLabelClick()}>
             <Text>{selectedOption === null ? label : selectedOption.label}</Text>
